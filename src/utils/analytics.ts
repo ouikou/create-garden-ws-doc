@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 let buffer: Array<any> = [];
 let galite: null | Function = null;
 let galitePromise: null | Promise<any> = null;

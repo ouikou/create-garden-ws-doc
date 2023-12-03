@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {
   useState,
   useRef,
@@ -256,7 +252,7 @@ export default function TopNav({
                       'text-sm me-0 w-10 h-10 text-link dark:text-link-dark flex origin-center transition-all ease-in-out'
                     )}
                   />
-                  <span className="sr-only 3xl:not-sr-only">React</span>
+                  <span className="sr-only 3xl:not-sr-only">GARDEN</span>
                 </NextLink>
               </div>
             </div>
@@ -285,7 +281,7 @@ export default function TopNav({
                 </NavItem>
                 <NavItem
                   isActive={section === 'reference'}
-                  url="/reference/react">
+                  url="/reference/garden">
                   Reference
                 </NavItem>
                 <NavItem isActive={section === 'community'} url="/community">
@@ -330,7 +326,7 @@ export default function TopNav({
                 </div>
                 <div className="flex">
                   <Link
-                    href="https://github.com/facebook/react/releases"
+                    href="https://github.com/open-garden/garden"
                     target="_blank"
                     rel="noreferrer noopener"
                     aria-label="Open on GitHub"
@@ -364,7 +360,7 @@ export default function TopNav({
                     </NavItem>
                     <NavItem
                       isActive={section === 'reference'}
-                      url="/reference/react">
+                      url="/reference/garden">
                       Reference
                     </NavItem>
                     <NavItem

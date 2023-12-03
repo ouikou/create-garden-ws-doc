@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {IconNewPage} from '../../Icon/IconNewPage';
 
 export const OpenInTypeScriptPlaygroundButton = (props: {content: string}) => {

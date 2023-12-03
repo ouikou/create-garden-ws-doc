@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {useState} from 'react';
 import cn from 'classnames';
 import {Button} from 'components/Button';

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import * as React from 'react';
 import Head from 'next/head';
 import {withRouter, Router} from 'next/router';
@@ -18,20 +14,11 @@ export interface SeoProps {
   searchOrder?: number;
 }
 
-const deployedTranslations = [
-  'en',
-  'zh-hans',
-  'es',
-  'fr',
-  'ja',
-  // We'll add more languages when they have enough content.
-  // Please DO NOT edit this list without a discussion in the reactjs/react.dev repo.
-  // It must be the same between all translations.
-];
+const deployedTranslations = ['en', 'ja'];
 
 function getDomain(languageCode: string): string {
-  const subdomain = languageCode === 'en' ? '' : languageCode + '.';
-  return subdomain + 'react.dev';
+  const subdomain = languageCode === 'en' ? '' : languageCode;
+  return 'https://open-garden.github.io/garden/' + subdomain;
 }
 
 export const Seo = withRouter(
@@ -50,12 +37,11 @@ export const Seo = withRouter(
     }`;
     // Allow setting a different title for Google results
     const pageTitle =
-      (titleForTitleTag ?? title) + (isHomePage ? '' : ' – React');
-    // Twitter's meta parser is not very good.
-    const twitterTitle = pageTitle.replace(/[<>]/g, '');
+      // (titleForTitleTag ?? title) + (isHomePage ? '' : ' – GARDEN');
+      'GARDEN' + (isHomePage ? '' : ' – GARDEN');
     let description = isHomePage
-      ? 'React is the library for web and native user interfaces. Build user interfaces out of individual pieces called components written in JavaScript. React is designed to let you seamlessly combine components written by independent people, teams, and organizations.'
-      : 'The library for web and native user interfaces';
+      ? 'GARDEN ScenarioPlatform is a set of tools that support the process of scenario-based development for for autonomous driving research.'
+      : 'GARDEN ScenarioPlatform is a set of tools that support the process of scenario-based development for for autonomous driving research.';
     return (
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -78,7 +64,6 @@ export const Seo = withRouter(
             href={canonicalUrl.replace(siteDomain, getDomain(languageCode))}
           />
         ))}
-        <meta property="fb:app_id" content="623268441017527" />
         <meta property="og:type" key="og:type" content="website" />
         <meta property="og:url" key="og:url" content={canonicalUrl} />
         {title != null && (
@@ -95,36 +80,6 @@ export const Seo = withRouter(
           property="og:image"
           key="og:image"
           content={`https://${siteDomain}${image}`}
-        />
-        <meta
-          name="twitter:card"
-          key="twitter:card"
-          content="summary_large_image"
-        />
-        <meta name="twitter:site" key="twitter:site" content="@reactjs" />
-        <meta name="twitter:creator" key="twitter:creator" content="@reactjs" />
-        {title != null && (
-          <meta
-            name="twitter:title"
-            key="twitter:title"
-            content={twitterTitle}
-          />
-        )}
-        {description != null && (
-          <meta
-            name="twitter:description"
-            key="twitter:description"
-            content={description}
-          />
-        )}
-        <meta
-          name="twitter:image"
-          key="twitter:image"
-          content={`https://${siteDomain}${image}`}
-        />
-        <meta
-          name="google-site-verification"
-          content="sIlAGs48RulR4DdP95YSWNKZIEtCqQmRjzn-Zq-CcD0"
         />
         {searchOrder != null && (
           <meta name="algolia-search-order" content={'' + searchOrder} />

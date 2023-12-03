@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import Breadcrumbs from 'components/Breadcrumbs';
 import Tag from 'components/Tag';
 import {H1} from './MDX/Heading';

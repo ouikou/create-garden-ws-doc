@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import NextLink from 'next/link';
 import {memo} from 'react';
 import cn from 'classnames';

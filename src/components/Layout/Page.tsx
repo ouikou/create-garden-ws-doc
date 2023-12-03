@@ -1,18 +1,11 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {Suspense} from 'react';
 import * as React from 'react';
 import {useRouter} from 'next/router';
 import {SidebarNav} from './SidebarNav';
 import {Footer} from './Footer';
 import {Toc} from './Toc';
-import SocialBanner from '../SocialBanner';
 import {DocsPageFooter} from 'components/DocsFooter';
 import {Seo} from 'components/Seo';
-import ButtonLink from 'components/ButtonLink';
-import {IconNavArrow} from 'components/Icon/IconNavArrow';
 import PageHeading from 'components/PageHeading';
 import {getRouteMeta} from './getRouteMeta';
 import {TocContext} from '../MDX/TocContext';
@@ -91,12 +84,10 @@ export function Page({children, toc, routeTree, meta, section}: PageProps) {
   let hasColumns = true;
   let showSidebar = true;
   let showToc = true;
-  let showSurvey = true;
   if (isHomePage || isBlogIndex) {
     hasColumns = false;
     showSidebar = false;
     showToc = false;
-    showSurvey = false;
   } else if (section === 'blog') {
     showToc = false;
     hasColumns = false;
@@ -117,7 +108,6 @@ export function Page({children, toc, routeTree, meta, section}: PageProps) {
         image={`/images/og-` + section + '.png'}
         searchOrder={searchOrder}
       />
-      <SocialBanner />
       <TopNav
         section={section}
         routeTree={routeTree}
@@ -157,30 +147,6 @@ export function Page({children, toc, routeTree, meta, section}: PageProps) {
                   {
                     <hr className="max-w-7xl mx-auto border-border dark:border-border-dark" />
                   }
-                  {showSurvey && (
-                    <>
-                      <div className="flex flex-col items-center m-4 p-4">
-                        <p className="font-bold text-primary dark:text-primary-dark text-lg mb-4">
-                          How do you like these docs?
-                        </p>
-                        <div>
-                          <ButtonLink
-                            href="https://www.surveymonkey.co.uk/r/PYRPF3X"
-                            className="mt-1"
-                            type="primary"
-                            size="md"
-                            target="_blank">
-                            Take our survey!
-                            <IconNavArrow
-                              displayDirection="end"
-                              className="inline ms-1"
-                            />
-                          </ButtonLink>
-                        </div>
-                      </div>
-                      <hr className="max-w-7xl mx-auto border-border dark:border-border-dark" />
-                    </>
-                  )}
                 </div>
               )}
               <div

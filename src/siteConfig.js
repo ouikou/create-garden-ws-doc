@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 exports.siteConfig = {
   // --------------------------------------
   // Translations should replace these lines:
@@ -9,12 +5,12 @@ exports.siteConfig = {
   hasLegacySite: true,
   isRTL: false,
   // --------------------------------------
-  copyright: `Copyright © ${new Date().getFullYear()} Facebook Inc. All Rights Reserved.`,
-  repoUrl: 'https://github.com/facebook/react',
-  twitterUrl: 'https://twitter.com/reactjs',
+  copyright: `Copyright © ${new Date().getFullYear()} NTT DATA Automobiligence Research Center, Ltd. All Rights Reserved.`,
+  repoUrl: 'https://github.com/open-garden/garden',
+  twitterUrl: 'https://open-garden.github.io/garden',
   algolia: {
-    appId: '1FCF9AYYAT',
-    apiKey: 'e8451218980a351815563de007648b00',
-    indexName: 'beta-react',
+    appId: 'WFFIEONDGV',
+    apiKey: 'c172f5988bf0a20dfcbb272c3787c410',
+    indexName: 'create_garden_ws_doc',
   },
 };

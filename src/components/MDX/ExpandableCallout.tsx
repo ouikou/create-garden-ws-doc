@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {useRef} from 'react';
 import * as React from 'react';
 import cn from 'classnames';

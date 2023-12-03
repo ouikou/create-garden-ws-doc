@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {Html, Head, Main, NextScript} from 'next/document';
 import {siteConfig} from '../siteConfig';
 

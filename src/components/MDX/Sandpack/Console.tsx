@@ -1,6 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
 import cn from 'classnames';
 import {useState, useRef, useEffect} from 'react';
 import {IconChevron} from 'components/Icon/IconChevron';

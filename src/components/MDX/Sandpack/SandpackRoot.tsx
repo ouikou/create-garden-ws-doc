@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {Children} from 'react';
 import * as React from 'react';
 import {SandpackProvider} from '@codesandbox/sandpack-react/unstyled';

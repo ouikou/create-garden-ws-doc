@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {Children} from 'react';
 
 // TODO: This logic could be in MDX plugins instead.

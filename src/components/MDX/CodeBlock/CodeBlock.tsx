@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import cn from 'classnames';
 import {HighlightStyle} from '@codemirror/language';
 import {highlightTree} from '@lezer/highlight';

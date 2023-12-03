@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {memo} from 'react';
 
 export const IconTerminal = memo<JSX.IntrinsicElements['svg']>(

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {Fragment, useMemo} from 'react';
 import {useRouter} from 'next/router';
 import {MDXComponents} from 'components/MDX/MDXComponents';

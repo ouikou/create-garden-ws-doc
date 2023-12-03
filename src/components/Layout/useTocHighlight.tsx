@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {useState, useRef, useEffect} from 'react';
 
 const TOP_OFFSET = 85;

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 // @ts-nocheck
 
 import {useState, useEffect} from 'react';

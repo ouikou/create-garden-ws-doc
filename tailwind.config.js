@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('./colors');
 

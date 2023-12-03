@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import * as React from 'react';
 import ButtonLink from 'components/ButtonLink';
 import {IconNavArrow} from 'components/Icon/IconNavArrow';

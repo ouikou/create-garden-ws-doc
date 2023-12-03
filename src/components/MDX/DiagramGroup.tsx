@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import {ReactNode} from 'react';
 
 interface DiagramGroupProps {

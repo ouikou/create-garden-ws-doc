@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 /**
  * Copied from Reach UI utils...
  *
@@ -103,7 +99,7 @@ export function forwardRefWithAs<Props, ComponentType extends As>(
 }
 
 /*
-Test components to make sure our dynamic As prop components work as intended 
+Test components to make sure our dynamic As prop components work as intended
 type PopupProps = {
   lol: string;
   children?: React.ReactNode | ((value?: number) => JSX.Element);

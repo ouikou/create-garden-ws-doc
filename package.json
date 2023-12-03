@@ -1,8 +1,8 @@
 {
-  "name": "react-dev",
+  "name": "create-garden-ws-doc",
   "version": "1.0.0",
   "private": true,
-  "license": "CC",
+  "license": "MIT",
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "dev": "next-remote-watch ./src/content",

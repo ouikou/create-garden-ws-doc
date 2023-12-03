@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- */
-
 import cn from 'classnames';
 import * as React from 'react';
 import {forwardRefWithAs} from 'utils/forwardRefWithAs';
