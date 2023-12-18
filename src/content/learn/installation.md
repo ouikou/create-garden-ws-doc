@@ -1,57 +1,279 @@
 ---
-title: Installation
+title: "ビルド&インストール"
 ---
 
-<Intro>
+GARDEN Scenario Platform をビルドします。
 
-React has been designed from the start for gradual adoption. You can use as little or as much React as you need. Whether you want to get a taste of React, add some interactivity to an HTML page, or start a complex React-powered app, this section will help you get started.
-
-</Intro>
-
-<YouWillLearn isChapter={true}>
-
-* [How to start a new React project](/learn/start-a-new-react-project)
-* [How to add React to an existing project](/learn/add-react-to-an-existing-project)
-* [How to set up your editor](/learn/editor-setup)
-* [How to install React Developer Tools](/learn/react-developer-tools)
-
-</YouWillLearn>
-
-## Try React {/*try-react*/}
-
-You don't need to install anything to play with React. Try editing this sandbox!
-
-<Sandpack>
-
-```js
-function Greeting({ name }) {
-  return <h1>Hello, {name}</h1>;
-}
-
-export default function App() {
-  return <Greeting name="world" />
-}
+ユーザーを切り替えます。
+```
+sudo su - garden-user
 ```
 
-</Sandpack>
+Mavenをインストールします。
+```
+sudo apt update
+sudo apt install maven=3.6.0-1~18.04.1
+```
 
-You can edit it directly or open it in a new tab by pressing the "Fork" button in the upper right corner.
+Antをインストールします。
+```
+sudo apt update
+sudo apt install ant=1.10.5-3~18.04
+```
 
-Most pages in the React documentation contain sandboxes like this. Outside of the React documentation, there are many online sandboxes that support React: for example, [CodeSandbox](https://codesandbox.io/s/new), [StackBlitz](https://stackblitz.com/fork/react), or [CodePen.](https://codepen.io/pen?&editors=0010&layout=left&prefill_data_id=3f4569d1-1b11-4bce-bd46-89090eed5ddb)
+Gitをインストールします。
+```
+sudo apt update
+sudo apt install git=1:2.17.1-1ubuntu0.8
+```
 
-### Try React locally {/*try-react-locally*/}
+GWTをダウンロードします。
+```
+cd ~/garden
+curl -O https://storage.googleapis.com/gwt-releases/gwt-2.9.0.zip
+```
+ファイル展開します。
+```
+unzip gwt-2.9.0.zip -d ./
+```
 
-To try React locally on your computer, [download this HTML page.](https://gist.githubusercontent.com/gaearon/0275b1e1518599bbeafcde4722e79ed1/raw/db72dcbf3384ee1708c4a07d3be79860db04bff0/example.html) Open it in your editor and in your browser!
+GARDENプロジェクトのビルドを実行します。
+```
+cd ~/garden
+git clone https://github.com/open-garden/garden.git garden-repo
+cp ~/garden/garden-repo/script/GARDEN_acacia.sh ~/garden/script	
+cd ~/garden/script
+chmod 764 GARDEN_acacia.sh	
+./GARDEN_acacia.sh build_all
+```
 
-## Start a new React project {/*start-a-new-react-project*/}
+必要な資材が以下のように格納されていることを確認します。
 
-If you want to build an app or a website fully with React, [start a new React project.](/learn/start-a-new-react-project)
+```
+# warの資材
+/home/garden-user/garden/war
+├── Zipc_Webplatform.war
+├── com.zipc.garden.webplatform.dsl.fmc.web.war
+├── com.zipc.garden.webplatform.dsl.sc.web.war
+├── RDFViewer.war
+└── prefix.properties
 
-## Add React to an existing project {/*add-react-to-an-existing-project*/}
+# dagsの資材
+/home/garden-user/etc/airflow/dags
+├── analyzer
+├── coordinates_converter.py
+├── coordinates_converter_trigger.py
+├── garden_analyzer.py
+├── garden_dag_trigger.py
+├── lon_lat_extractor.py
+└── requirements.txt
 
-If want to try using React in your existing app or a website, [add React to an existing project.](/learn/add-react-to-an-existing-project)
+# scriptの資材
+/home/garden-user/garden/script
+├── CompactDatabase.jar
+└── GARDEN_acacia.sh
 
-## Next steps {/*next-steps*/}
+# Job Executorの資材
+/home/garden-user/garden/job_executor/
+├── Zipc_JobExecutor.jar
+├── acts_cmd_2.92.jar
+└── lib
+    ├── Zipc_Xtext_SC.jar
+    └── z3
+        ├── Microsoft.Z3.deps.json
+        ├── Microsoft.Z3.dll
+        ├── Microsoft.Z3.xml
+        ├── com.microsoft.z3.jar
+        ├── libz3.a
+        ├── libz3.so
+        ├── libz3java.so
+        ├── requirements.txt
+        └── z3
 
-Head to the [Quick Start](/learn) guide for a tour of the most important React concepts you will encounter every day.
+# node系アプリの資材
+/home/garden-user/garden/node_services/
+├── GARDEN_Portal
+├── Zipc_ScenarioEditor
+└── Zipc_Microservice-Road
+```
 
+
+garden-userでPM2をインストールします。
+
+```
+npm install pm2@5.1.0 -g
+```
+
+ecosystem.config.jsファイルを新規作成する
+```
+cd /home/garden-user/garden/node_services
+pm2 ecosystem
+```
+
+作成されたファイルの内容を変更します。
+```
+vi /home/garden-user/garden/node_services/ecosystem.config.js
+```
+
+```
+module.exports = {
+  apps : [
+    {
+      name: 'portal',
+      script: 'npm --prefix /home/garden-user/garden/node_services/GARDEN_Portal/server run start',
+      error_file: '/home/garden-user/garden/node_services/GARDEN_Portal/server/logs/err.log',
+      out_file: '/home/garden-user/garden/node_services/GARDEN_Portal/server/logs/out.log',
+      time: true
+    },{
+      name: 'road_service',
+      script: '/home/garden-user/garden/node_services/Zipc_Microservice-Road/index.js',
+      error_file: '/home/garden-user/garden/node_services/Zipc_Microservice-Road/logs/err.log',
+      out_file: '/home/garden-user/garden/node_services/Zipc_Microservice-Road/logs/out.log',
+      time: true
+    },{
+      name: 'scenario_editor',
+      script: 'npm --prefix /home/garden-user/garden/node_services/Zipc_ScenarioEditor run start',
+      error_file: '/home/garden-user/garden/node_services/Zipc_ScenarioEditor/logs/err.log',
+      out_file: '/home/garden-user/garden/node_services/Zipc_ScenarioEditor/logs/out.log',
+      time: true
+    }
+  ]
+};
+
+```
+
+
+apache2.confの設定を変更します。
+```
+sudo vi /etc/apache2/apache2.conf
+```
+以下を追記します。
+```
+<Directory /home/garden-user/etc/tomcat/webapps>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+</Directory>
+```
+
+![](/images/tutorial/Build.ja/2021-06-22-09-15-49.png)
+
+
+
+
+Locationを追記します。
+```
+<Location /scenario_modeler/>
+        ProxyPass ajp://localhost:8080/scenario_modeler/
+</Location>
+<Location /rdf_viewer/>
+        ProxyPass ajp://localhost:8080/rdf_viewer/
+</Location>
+```
+
+
+AJPポート設定の追加をします。
+```
+sudo vi /etc/apache2/mods-available/proxy_ajp.conf
+```
+proxy_ajp.conf の内容は以下となります。
+```
+ProxyPass /scenario_modeler/  ajp://localhost:8080/scenario_modeler/
+ProxyPass /rdf_viewer/ ajp://localhost:8080/rdf_viewer/
+```
+
+proxy proxy_ajp　を有効にします。
+```
+cd /etc/apache2/mods-available/
+sudo a2enmod proxy proxy_ajp
+```
+![](/images/tutorial/Build.ja/2021-06-22-09-17-37.png)
+
+apache2 を再起動します。
+```
+sudo systemctl restart apache2
+```
+
+Tomcatの設定を変更します。
+```
+sudo vi /home/garden-user/etc/tomcat/conf/server.xml
+```
+以下を追記します。
+```
+<Context path="/scenario_modeler"
+    docBase="/home/garden-user/etc/tomcat/webapps/Zipc_Webplatform"
+    debug="0" reloadable="true" />
+<Context path="/rdf_viewer"
+    docBase="/home/garden-user/etc/tomcat/webapps/RDFViewer"
+    debug="0" reloadable="true" />
+```
+
+![](/images/tutorial/Build.ja/2021-06-22-09-19-48.png)
+
+
+
+tomcat, apacheを再起動します。
+```
+sudo systemctl restart tomcat
+sudo systemctl restart apache2
+```
+
+![](/images/tutorial/Build.ja/2021-06-22-09-20-31.png)
+
+
+
+
+GARDENのサービスを実行するには以下を実行します。
+```
+cd ~/garden/script
+./GARDEN_acacia.sh start_all
+```
+
+GARDENのサービスを停止するには以下を実行します。
+```
+cd ~/garden/script
+./GARDEN_acacia.sh stop_all
+```
+
+Fusekiデータベースのcompactを実行するには以下を実行します。
+```
+cd ~/garden/script
+./GARDEN_acacia.sh compact_fuseki
+```
+
+
+定時実行の設定をします。
+
+cronをインストールします。
+```
+sudo apt update
+sudo apt install cron
+```
+
+crontabファイルを作成します。
+```
+sudo cp /etc/crontab /etc/cron.d/acacia_cron
+sudo vi /etc/cron.d/acacia_cron
+```
+
+毎日23:30に、Fuseki Compactを実行する設定をします。
+
+```
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# m h dom mon dow user  command
+30 23   * * *  root  cd /home/garden-user/garden/script && "./GARDEN_acacia.sh" "compact_fuseki">>/home/garden-user/garden/script/script.log
+
+```
+
+crontabファイルの設定を有効にします。
+```
+sudo systemctl restart cron
+```

@@ -17,7 +17,6 @@ import {IconHamburger} from 'components/Icon/IconHamburger';
 import {IconSearch} from 'components/Icon/IconSearch';
 import {Search} from 'components/Search';
 import {Logo} from '../../Logo';
-import {Feedback} from '../Feedback';
 import {SidebarRouteTree} from '../Sidebar';
 import type {RouteItem} from '../getRouteMeta';
 
@@ -136,7 +135,7 @@ export default function TopNav({
 }: {
   routeTree: RouteItem;
   breadcrumbs: RouteItem[];
-  section: 'learn' | 'reference' | 'community' | 'blog' | 'home' | 'unknown';
+  section: 'learn' | 'home' | 'unknown';
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const scrollParentRef = useRef<HTMLDivElement>(null);
@@ -279,17 +278,6 @@ export default function TopNav({
                 <NavItem isActive={section === 'learn'} url="/learn">
                   Learn
                 </NavItem>
-                <NavItem
-                  isActive={section === 'reference'}
-                  url="/reference/garden">
-                  Reference
-                </NavItem>
-                <NavItem isActive={section === 'community'} url="/community">
-                  Community
-                </NavItem>
-                <NavItem isActive={section === 'blog'} url="/blog">
-                  Blog
-                </NavItem>
               </div>
               <div className="flex w-full md:hidden"></div>
               <div className="flex items-center -space-x-2.5 xs:space-x-0 ">
@@ -358,19 +346,6 @@ export default function TopNav({
                     <NavItem isActive={section === 'learn'} url="/learn">
                       Learn
                     </NavItem>
-                    <NavItem
-                      isActive={section === 'reference'}
-                      url="/reference/garden">
-                      Reference
-                    </NavItem>
-                    <NavItem
-                      isActive={section === 'community'}
-                      url="/community">
-                      Community
-                    </NavItem>
-                    <NavItem isActive={section === 'blog'} url="/blog">
-                      Blog
-                    </NavItem>
                   </div>
                   <div
                     role="separator"
@@ -387,9 +362,6 @@ export default function TopNav({
                 </Suspense>
                 <div className="h-16" />
               </nav>
-              <div className="fixed bottom-0 hidden lg:block">
-                <Feedback />
-              </div>
             </aside>
           </div>
         )}

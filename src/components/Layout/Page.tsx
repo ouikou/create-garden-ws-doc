@@ -142,13 +142,13 @@ export function Page({children, toc, routeTree, meta, section}: PageProps) {
                 'self-stretch w-full',
                 isHomePage && 'bg-wash dark:bg-gray-95 mt-[-1px]'
               )}>
-              {!isHomePage && (
+              {
                 <div className="mx-auto w-full px-5 sm:px-12 md:px-12 pt-10 md:pt-12 lg:pt-10">
                   {
                     <hr className="max-w-7xl mx-auto border-border dark:border-border-dark" />
                   }
                 </div>
-              )}
+              }
               <div
                 className={cn(
                   'py-12 px-5 sm:px-12 md:px-12 sm:py-12 md:py-16 lg:py-14',
