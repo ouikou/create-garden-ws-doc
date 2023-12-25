@@ -1,6 +1,6 @@
 ---
 id: home
-title: React
+title: GARDEN
 permalink: index.html
 ---
 

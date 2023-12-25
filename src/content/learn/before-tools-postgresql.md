@@ -3,27 +3,11 @@ title: "PostgreSQL"
 ---
 
 
-認証キーの追加をします。
-
-```
-sudo curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-```
-
-リポジトリの追加をします。
-
-```
-lsb_release -c
-```
-
-```
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-```
-
 PostgreSQL をインストールします。
 
 ```
 sudo apt update
-sudo apt install postgresql-11
+sudo apt install postgresql postgresql-contrib
 ```
 
 .pgpassファイルの設定をします。
@@ -62,7 +46,7 @@ chmod 600 ~/.pgpass
  postgresql.conf を編集します。
 
  ```
- sudo vi /etc/postgresql/11/main/postgresql.conf
+ sudo vi /etc/postgresql/10/main/postgresql.conf
  ```
 
  57行目【# - Connection Settings -】の付近、listen_addresses = '*' を追加し、すべての通信を受け入れます。
@@ -77,14 +61,14 @@ listen_addresses = '*'
  pg_hba.conf の編集をします。
 
 ```
- sudo vi /etc/postgresql/11/main/pg_hba.conf
+sudo vi /etc/postgresql/10/main/pg_hba.conf
 ```
 
 91行目【# IPv4 local connections:】の付近、認証を受け付けるIP/IP範囲を追記します。
 ```
 # IPv4 local connections:
 host    all             all             127.0.0.1/32            md5
-host    all             all             0.0.0.0/0                 md5
+host    all             all             0.0.0.0/0               md5
 ```
 
 firewallがアクティブになる場合、portの許可を追加します。
@@ -104,7 +88,7 @@ sudo -u postgres psql
 以下のように表示されます。
 
 ```
-psql (11.12 (Ubuntu 11.12-1.pgdg18.04+1))
+psql (10.23 (Ubuntu 10.23-0ubuntu0.18.04.2))
 "help" でヘルプを表示します。
 
 postgres=#

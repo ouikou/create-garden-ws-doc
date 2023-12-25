@@ -25,7 +25,7 @@ sudo chmod -R 764 /home/garden-user/etc/airflow
 
 Python3.6をインストールします。
 ```
-sudo apt install python3.6 python3-pip
+sudo apt install python3-pip
 ```
 
 psql を使って PostgreSQL へ接続します。
@@ -35,7 +35,7 @@ sudo -u postgres psql
 
 以下のように表示されます。
 ```
-psql (11.12 (Ubuntu 11.12-1.pgdg18.04+1))
+psql (10.23 (Ubuntu 10.23-0ubuntu0.18.04.2))
 "help" でヘルプを表示します。
 
 postgres=#

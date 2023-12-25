@@ -37,8 +37,8 @@ export const Seo = withRouter(
     }`;
     // Allow setting a different title for Google results
     const pageTitle =
-      // (titleForTitleTag ?? title) + (isHomePage ? '' : ' – GARDEN');
-      'GARDEN' + (isHomePage ? '' : ' – GARDEN');
+      (titleForTitleTag ?? title) + (isHomePage ? '' : ' – GARDEN');
+    // 'GARDEN' + (isHomePage ? '' : ' – GARDEN');
     let description = isHomePage
       ? 'GARDEN ScenarioPlatform is a set of tools that support the process of scenario-based development for for autonomous driving research.'
       : 'GARDEN ScenarioPlatform is a set of tools that support the process of scenario-based development for for autonomous driving research.';

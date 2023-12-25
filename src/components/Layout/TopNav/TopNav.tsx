@@ -135,7 +135,7 @@ export default function TopNav({
 }: {
   routeTree: RouteItem;
   breadcrumbs: RouteItem[];
-  section: 'learn' | 'home' | 'unknown';
+  section: 'learn' | 'reference' | 'community' | 'blog' | 'home' | 'unknown';
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const scrollParentRef = useRef<HTMLDivElement>(null);

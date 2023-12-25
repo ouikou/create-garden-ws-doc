@@ -24,7 +24,7 @@ sudo apt install ant=1.10.5-3~18.04
 Gitをインストールします。
 ```
 sudo apt update
-sudo apt install git=1:2.17.1-1ubuntu0.8
+sudo apt install git=1:2.17.1-1ubuntu0.18
 ```
 
 GWTをダウンロードします。

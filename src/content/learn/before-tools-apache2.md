@@ -6,7 +6,7 @@ Apache2をインストールします。
 
 ```
 sudo apt update
-sudo apt install apache2=2.4.29-1ubuntu4.16
+sudo apt install apache2=2.4.29-1ubuntu4.27
 ```
 
 以下のパスに***.confを作成します。

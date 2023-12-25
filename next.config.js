@@ -2,6 +2,10 @@
  * @type {import('next').NextConfig}
  **/
 const nextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
   pageExtensions: ['jsx', 'js', 'ts', 'tsx', 'mdx', 'md'],
   reactStrictMode: true,
   experimental: {
