@@ -116,7 +116,7 @@ export function Search({
             }}
             transformItems={(items: any[]) => {
               return items.map((item) => {
-                const url = new URL(item.url);
+                const url = new URL(item.url, 'http://localhost:3000');
                 return {
                   ...item,
                   url: item.url.replace(url.origin, '').replace('#__next', ''),
