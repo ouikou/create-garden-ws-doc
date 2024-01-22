@@ -4,9 +4,6 @@ import {MDXComponents} from 'components/MDX/MDXComponents';
 import {Page} from 'components/Layout/Page';
 import sidebarHome from '../sidebarHome.json';
 import sidebarLearn from '../sidebarLearn.json';
-import sidebarReference from '../sidebarReference.json';
-import sidebarCommunity from '../sidebarCommunity.json';
-import sidebarBlog from '../sidebarBlog.json';
 
 export default function Layout({content, toc, meta}) {
   const parsedContent = useMemo(
@@ -24,15 +21,6 @@ export default function Layout({content, toc, meta}) {
     case 'learn':
       routeTree = sidebarLearn;
       break;
-    case 'reference':
-      routeTree = sidebarReference;
-      break;
-    case 'community':
-      routeTree = sidebarCommunity;
-      break;
-    case 'blog':
-      routeTree = sidebarBlog;
-      break;
   }
   return (
     <Page toc={parsedToc} routeTree={routeTree} meta={meta} section={section}>
@@ -46,14 +34,8 @@ function useActiveSection() {
   const cleanedPath = asPath.split(/[\?\#]/)[0];
   if (cleanedPath === '/') {
     return 'home';
-  } else if (cleanedPath.startsWith('/reference')) {
-    return 'reference';
   } else if (asPath.startsWith('/learn')) {
     return 'learn';
-  } else if (asPath.startsWith('/community')) {
-    return 'community';
-  } else if (asPath.startsWith('/blog')) {
-    return 'blog';
   } else {
     return 'unknown';
   }
