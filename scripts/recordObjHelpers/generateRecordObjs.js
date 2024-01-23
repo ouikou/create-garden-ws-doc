@@ -17,49 +17,61 @@ function stripLinks(line) {
   return line.replace(/\[([^\]]+)\]\([^)]+\)/, (match, p1) => p1);
 }
 
-function addHeaderID(line, slugger) {
-  // check if we're a header at all
-  if (!line.startsWith('#')) {
-    return line;
-  }
-
+function genObject(line, slugger, objValue, idx) {
   const match =
     /^(#+\s+)(.+?)(\s*\{(?:\/\*|#)([^\}\*\/]+)(?:\*\/)?\}\s*)?$/.exec(line);
   const before = match[1] + match[2];
+  const existingId = match[4];
+  const title = match[2];
   const proc = modules
     .unified()
     .use(modules.remarkParse)
     .use(modules.remarkSlug);
   const tree = proc.runSync(proc.parse(before));
   const head = tree.children[0];
-  assert(
-    head && head.type === 'heading',
-    'expected `' +
-      before +
-      '` to be a heading, is it using a normal space after `#`?'
-  );
-  const autoId = head.data.id;
-  const existingId = match[4];
-  const id = existingId || autoId;
-  // Ignore numbers:
-  const cleanExisting = existingId
-    ? existingId.replace(/-\d+$/, '')
-    : undefined;
-  const cleanAuto = autoId.replace(/-\d+$/, '');
 
-  if (cleanExisting && cleanExisting !== cleanAuto) {
-    console.log(
-      'Note: heading `%s` has a different ID (`%s`) than what GH generates for it: `%s`:',
-      before,
-      existingId,
-      autoId
-    );
+  if (head.type !== 'heading') {
+    return null;
   }
 
-  return match[1] + match[2] + ' {/*' + id + '*/}';
+  if (title === 'シナリオ実行') {
+    console.log();
+  }
+
+  const result = {
+    objectID: `${idx++}-${objValue.url}#${existingId}`,
+    url: `${objValue.url}#${existingId}`,
+    content: null,
+    hierarchy: {...objValue.hierarchy},
+  };
+  switch (head.depth) {
+    case 2:
+      result.type = 'lvl2';
+      result.hierarchy.lvl2 = title;
+      break;
+    case 3:
+      result.type = 'lvl3';
+      result.hierarchy.lvl3 = title;
+      break;
+    case 4:
+      result.type = 'lvl4';
+      result.hierarchy.lvl4 = title;
+      break;
+    case 5:
+      result.type = 'lvl5';
+      result.hierarchy.lvl5 = title;
+    case 6:
+      result.type = 'lvl6';
+      result.hierarchy.lvl6 = title;
+      break;
+    default:
+      return null;
+  }
+
+  return result;
 }
 
-function addRecordObjs(lines) {
+function generateRecords(lines, objValue) {
   // Sluggers should be per file
   const slugger = new GithubSlugger();
   let inCode = false;
@@ -68,21 +80,42 @@ function addRecordObjs(lines) {
     // Ignore code blocks
     if (line.startsWith('```')) {
       inCode = !inCode;
-      results.push(line);
       return;
     }
     if (inCode) {
-      results.push(line);
       return;
     }
 
-    results.push(addHeaderID(line, slugger));
+    // check if we're a header at all
+    if (!line.startsWith('#')) {
+      return line;
+    }
+
+    const generateObject = genObject(
+      line,
+      slugger,
+      {...objValue},
+      results.length + 1
+    );
+    if (generateObject !== null) {
+      // results.splice(0, 0, generateObject);
+      results.push(generateObject);
+    }
   });
+
   return results;
 }
 
-async function main(pathObject) {
-  if (pathObject === undefined || pathObject === null) {
+async function main(sidebarContent, outputContentPath) {
+  if (sidebarContent === undefined || sidebarContent === null) {
+    return;
+  }
+  if (
+    !(
+      sidebarContent.hasOwnProperty('title') &&
+      sidebarContent.hasOwnProperty('path')
+    )
+  ) {
     return;
   }
 
@@ -96,46 +129,69 @@ async function main(pathObject) {
   const remarkSlug = remarkSlugMod.default;
   modules = {unified, remarkParse, remarkSlug};
 
-  const recordObj = {
-    objectID: null,
-    url: null,
-    content: null,
-    hierarchy: {
-      lvl0: null,
-      lvl1: null,
-      lvl2: null,
-      lvl3: null,
-      lvl4: null,
-      lvl5: null,
-      lvl6: null,
-    },
-  };
+  const indexFiles = [];
+  const updatedRecords = [];
+  const base_url = 'http://localhost:3000';
+  const title_lvl0 = sidebarContent['title'];
 
-  pathContent = [];
-  pathObject.routes
+  sidebarContent.routes
     .filter(
       (route) => route.hasOwnProperty('title') && route.hasOwnProperty('path')
     )
     .forEach((route) => {
-      pathContent.push({
-        file: route.path,
-        objTep: {...recordObj},
+      indexFiles.push(
+        `src/content${route.path === '/learn' ? '/index' : route.path}.md`
+      );
+      updatedRecords.push({
+        objectID: `0-${base_url}${route.path}`,
+        url: `${base_url}${route.path}`,
+        content: null,
+        type: 'lvl1',
+        hierarchy: {
+          lvl0: title_lvl0,
+          lvl1: route.title,
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null,
+          lvl6: null,
+        },
       });
+
+      if (route.hasOwnProperty('routes')) {
+        route.routes.forEach((childRoute) => {
+          indexFiles.push(`src/content${childRoute.path}.md`);
+          updatedRecords.push({
+            objectID: `0-${base_url}${childRoute.path}`,
+            url: `${base_url}${childRoute.path}`,
+            content: null,
+            type: 'lvl1',
+            hierarchy: {
+              lvl0: title_lvl0,
+              lvl1: childRoute.title,
+              lvl2: null,
+              lvl3: null,
+              lvl4: null,
+              lvl5: null,
+              lvl6: null,
+            },
+          });
+        });
+      }
     });
-  console.log();
 
-  const files = paths.map((path) => [...walk(path)]).flat();
-
-  files.forEach((file) => {
+  indexFiles.forEach((file, i) => {
     if (!(file.endsWith('.md') || file.endsWith('.mdx'))) {
       return;
     }
 
     const content = fs.readFileSync(file, 'utf8');
     const lines = content.split('\n');
-    const updatedLines = addRecordObjs(lines);
-    fs.writeFileSync(file, updatedLines.join('\n'));
+    const generatedRecords = generateRecords(lines, updatedRecords[i]);
+    updatedRecords.push(...generatedRecords);
   });
+
+  fs.writeFileSync(outputContentPath, JSON.stringify(updatedRecords, null, 2));
 }
 
 module.exports = main;

@@ -11,6 +11,6 @@ exports.siteConfig = {
   algolia: {
     appId: 'WFFIEONDGV',
     apiKey: 'c172f5988bf0a20dfcbb272c3787c410',
-    indexName: 'create_garden_ws_doc',
+    indexName: 'garden_acacia',
   },
 };

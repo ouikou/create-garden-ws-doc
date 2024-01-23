@@ -4,7 +4,6 @@ import NextLink from 'next/link';
 import ButtonLink from '../ButtonLink';
 import {Logo} from 'components/Logo';
 import {ExternalLink} from 'components/ExternalLink';
-import sidebarBlog from '../../sidebarBlog.json';
 
 import {MDXComponents} from 'components/MDX/MDXComponents';
 
@@ -57,11 +56,6 @@ function FullBleed({children}) {
   return (
     <div className="max-w-7xl mx-auto flex flex-col w-full">{children}</div>
   );
-}
-
-const blogSidebar = sidebarBlog.routes[1];
-if (blogSidebar.path !== '/blog') {
-  throw Error('Could not find the blog route in sidebarBlog.json');
 }
 
 export function HomeContent() {
